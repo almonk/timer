@@ -15,9 +15,14 @@ struct ContentView: View {
     
     var body: some View {
         VStack {
-            Text(timeInSeconds.secondsToTime())
-                .font(.system(size: 24))
-                .fontWeight(.black)
+            ZStack {
+                RoundedRectangle(cornerRadius: 8)
+                    .foregroundColor(Color.black.opacity(0.05))
+                Text(timeInSeconds.secondsToTime())
+                    .font(Font.system(size:18, design: .monospaced))
+                    .padding(.vertical, 8)
+            }
+            
             HStack {
                 Button(action: {
                     self.startTimer()
@@ -29,7 +34,8 @@ struct ContentView: View {
                     self.timerIsActive.toggle()
                 }) {
                     Text(!timerIsActive ? "Resume" : "Pause")
-                }.frame(width: 90)
+                }.disabled(timer == nil)
+                .frame(width: 90)
                 
                 Button(action: {
                     self.timerIsActive = false
@@ -40,7 +46,8 @@ struct ContentView: View {
                     Text("Reset")
                 }
             }
-        }.padding(.all, 20)
+        }.padding(.horizontal, 20)
+        .padding(.vertical, 15)
     }
     
     private func startTimer() {
